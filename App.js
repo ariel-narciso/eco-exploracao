@@ -23,7 +23,8 @@ const StackNavigator = createStackNavigator({
     },
     headerTitleStyle: {
       flexGrow: 1,
-      textAlign: 'center'
+      textAlign: 'center',
+      fontSize: 25
     }
   }
 });
