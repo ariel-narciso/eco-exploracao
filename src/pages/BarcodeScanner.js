@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { Alert, Text, View, StyleSheet, Button } from 'react-native';
+import { Alert, Text, View, StyleSheet, Modal } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import ScannerResponse from './ScannerResponse'
 
 export default class BarcodeScanner extends React.Component {
 	state = {
 		hasCameraPermission: null,
 		scanned: false,
+		modalVisible: false,
+		response: {}
 	};
 
 	async componentDidMount() {
@@ -38,14 +41,20 @@ export default class BarcodeScanner extends React.Component {
 		
 		return (
 			<View
-				style={{
-					flex: 1,
-					flexDirection: 'column',
-					justifyContent: 'flex-end',
-				}}>
+				style={styles.container}>
+				<Modal
+					animationType='slide'
+					transparent={false}
+					visible={this.state.modalVisible}
+					onRequestClose={
+						() => this.setState({modalVisible: false, scanned: false})
+					}
+				>
+					<ScannerResponse params={this.state.response} />
+				</Modal>
 				<BarCodeScanner
 					onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
-					style={StyleSheet.absoluteFillObject}
+					style={styles.barcodeScanner}
 				/>
 			</View>
 		);
@@ -63,9 +72,12 @@ export default class BarcodeScanner extends React.Component {
 				this.setState({ scanned: true });
 				this.errorMessage(() => this.setState({scanned: false}));
 			} else {
-				//this.setState({ scanned: true });
-				this.props.navigation.navigate('ScannerResponse', resposta); // tem que resolver
-				//this.setState({scanned: false});
+				this.setState({
+					response: resposta,
+					scanned: true,
+					modalVisible: true,
+				});
+				//this.props.navigation.navigate('ScannerResponse', resposta); // tem que resolver
 			}
 		} catch (error) {
 				this.setState({ scanned: true });
@@ -73,3 +85,14 @@ export default class BarcodeScanner extends React.Component {
 		}
 	};
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		//flexDirection: 'column',
+		//justifyContent: 'flex-end',
+	},
+	barcodeScanner: {
+		flex: 1
+	}
+})
