@@ -1,0 +1,10 @@
+Header:
+    Mudar titulo e estilo de acordo com a tela corrente - ok
+
+Index:
+    Colocar imagem de fundo
+    Estilizar botão - ok
+
+BarCodeScanner:
+    Usar modal - ok
+    Realçar o centro da tela
