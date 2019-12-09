@@ -1,27 +1,18 @@
 import React from 'react';
-import { StyleSheet, ScrollView, Text, View } from 'react-native';
+import { StyleSheet, ScrollView, Text } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import { blue, black, bold } from 'ansi-colors';
 
 export default class ScannerResponse extends React.Component {
   render() {
-		const {pergunta, alternativa, resposta, dificuldade, link} = this.props.navigation.state.params;
+		const {pergunta, alternativa, resposta, dificuldade, link} = this.props.params;
 		return (
 			<ScrollView style={styles(dificuldade).container}>
-				<View style={styles(dificuldade).view}>
-					<Text style={styles(dificuldade).pergunta}>{pergunta}</Text>
-				</View>
-				<View style={styles(dificuldade).view}>
-					<Text style={styles(dificuldade).alternativa}>{alternativa}</Text>
-				</View>
-				<View style={styles(dificuldade).view}>
-					<Text style={styles(dificuldade).resposta}>{resposta}</Text>
-				</View>
-				<View style={styles(dificuldade).view}>
-					<Text style={styles(dificuldade).link} onPress={() => WebBrowser.openBrowserAsync(link)} >
-						Veja mais aqui
-					</Text>
-				</View>
+				<Text style={styles(dificuldade).pergunta}>{pergunta}</Text>
+				<Text style={styles(dificuldade).alternativa}>{alternativa}</Text>
+				<Text style={styles(dificuldade).resposta}>{resposta}</Text>
+				<Text style={styles(dificuldade).link} onPress={() => WebBrowser.openBrowserAsync(link)} >
+					Veja mais aqui
+				</Text>
 			</ScrollView>
 		)
 	};
@@ -47,13 +38,6 @@ styles = (dificuldade) => {
 		container: {
 			flex: 1,
 			backgroundColor: backgroundColor
-		},
-		view: {
-			//alignItems: "center",
-			//justifyContent: "center",
-			//flexDirection: "row",
-			//height: 30
-			//flex: 1
 		},
 		pergunta: {
 			fontSize: 25,
